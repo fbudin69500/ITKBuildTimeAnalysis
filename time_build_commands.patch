@@ -1,0 +1,41 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c91fd8e457..85ceebaaca 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -53,6 +53,36 @@ if(NOT CMAKE_CXX_EXTENSIONS)
+ endif()
+ 
+ # ====
++
++
++  set(__launch_common_options
++    "--target-name <TARGET_NAME> --build-dir <CMAKE_CURRENT_BINARY_DIR>")
++
++  set(__launch_compile_options
++    "${__launch_common_options} --output <OBJECT> --source <SOURCE> --language <LANGUAGE>")
++
++  set(__launch_link_options
++    "${__launch_common_options} --output <TARGET> --target-type <TARGET_TYPE> --language <LANGUAGE>")
++
++  set(__launch_custom_options
++    "${__launch_common_options} --output <OUTPUT>")
++
++  set(CTEST_LAUNCH_COMPILE
++    "/usr/bin/time \"${CMAKE_CTEST_COMMAND}\" --launch ${__launch_compile_options} --")
++
++  set(CTEST_LAUNCH_LINK
++    "/usr/bin/time \"${CMAKE_CTEST_COMMAND}\" --launch ${__launch_link_options} --")
++
++  set(CTEST_LAUNCH_CUSTOM
++    "/usr/bin/time \"${CMAKE_CTEST_COMMAND}\" --launch ${__launch_custom_options} --")
++
++  set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CTEST_LAUNCH_COMPILE}")
++  set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CTEST_LAUNCH_LINK}")
++  set_property(GLOBAL PROPERTY RULE_LAUNCH_CUSTOM "${CTEST_LAUNCH_CUSTOM}")
++
++
++
++
+ include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/ITKInitializeBuildType.cmake)
+ 
+ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake ${CMAKE_MODULE_PATH})
