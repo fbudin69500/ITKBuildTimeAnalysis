@@ -1,40 +1,15 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c91fd8e457..96720a4b51 100644
+index 764ea962ee..6f401f72e7 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -53,6 +53,36 @@ if(NOT CMAKE_CXX_EXTENSIONS)
+@@ -53,6 +53,11 @@ if(NOT CMAKE_CXX_EXTENSIONS)
  endif()
  
  # ====
 +
-+
-+  set(__launch_common_options
-+    "--target-name <TARGET_NAME> --build-dir <CMAKE_CURRENT_BINARY_DIR>")
-+
-+  set(__launch_compile_options
-+    "${__launch_common_options} --output <OBJECT> --source <SOURCE> --language <LANGUAGE>")
-+
-+  set(__launch_link_options
-+    "${__launch_common_options} --output <TARGET> --target-type <TARGET_TYPE> --language <LANGUAGE>")
-+
-+  set(__launch_custom_options
-+    "${__launch_common_options} --output <OUTPUT>")
-+
-+  set(CTEST_LAUNCH_COMPILE
-+    "/home/francois.budin/devel/itk/ITK/log_script_time.sh \"${CMAKE_CTEST_COMMAND}\" --launch ${__launch_compile_options} --")
-+
-+  set(CTEST_LAUNCH_LINK
-+    "/home/francois.budin/devel/itk/ITK/log_script_time.sh \"${CMAKE_CTEST_COMMAND}\" --launch ${__launch_link_options} --")
-+
-+  set(CTEST_LAUNCH_CUSTOM
-+    "/home/francois.budin/devel/itk/ITK/log_script_time.sh \"${CMAKE_CTEST_COMMAND}\" --launch ${__launch_custom_options} --")
-+
-+  set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CTEST_LAUNCH_COMPILE}")
-+  set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CTEST_LAUNCH_LINK}")
-+  set_property(GLOBAL PROPERTY RULE_LAUNCH_CUSTOM "${CTEST_LAUNCH_CUSTOM}")
-+
-+
-+
++set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "/usr/bin/time -v -o ${TIME_LOG_FILE} -a")
++set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "/usr/bin/time -v -o ${TIME_LOG_FILE} -a")
++set_property(GLOBAL PROPERTY RULE_LAUNCH_CUSTOM "/usr/bin/time -v -o ${TIME_LOG_FILE} -a")
 +
  include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/ITKInitializeBuildType.cmake)
  

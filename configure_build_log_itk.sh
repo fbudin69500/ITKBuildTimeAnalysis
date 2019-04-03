@@ -1,6 +1,8 @@
 #!/bin/bash
 
+log_file="/tmp/mylog"
+rm $log_file
 mkdir build
 cd build
-cmake -DITK_WRAP_PYTHON:BOOL=ON -DITK_LEGACY_SILENT:BOOL=ON ..
-make -j1 > log_times 2>&1
+cmake -DITK_WRAP_PYTHON:BOOL=ON -DITK_LEGACY_SILENT:BOOL=ON -DTIME_LOG_FILE:FILEPATH=$log_file ..
+chrt -i 0 /usr/bin/time -v -a -o $log_file make -j24
